@@ -11,25 +11,25 @@ jobs:
         steps:
             - checkout
 
-        - restore_cache:
-            keys:
-                - v1-dependencies-{{ checksum "package.json" }}
-                - v1-dependencies-
+            - restore_cache:
+                keys:
+                    - v1-dependencies-{{ checksum "package.json" }}
+                    - v1-dependencies-
 
-        - run: npm install
+            - run: npm install
 
-        - save_cache:
-            paths:
-                - node_modules
-            key: v1-dependencies-{{ checksum "package.json" }}
+            - save_cache:
+                paths:
+                    - node_modules
+                key: v1-dependencies-{{ checksum "package.json" }}
 
-        - run:
-            name: Run tests
-            command: npm test
+            - run:
+                name: Run tests
+                command: npm test
 
-        - persist_to_workspace:
-            root: ~/repo
-            paths: .
+            - persist_to_workspace:
+                root: ~/repo
+                paths: .
 
     deploy:
         <<: *defaults
